@@ -8,6 +8,7 @@ const path = require('path');
 const PaymentService = require('./services/payment-service');
 
 const app = express();
+app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3001;
 const ENVIRONMENT = process.env.MPESA_ENVIRONMENT || 'sandbox';
 
