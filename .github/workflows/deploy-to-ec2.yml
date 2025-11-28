@@ -7,7 +7,7 @@ on:
 
 env:
   NODE_VERSION: '18'
-  APP_NAME: 'fundfast-production'
+  APP_NAME: 'hela-mkopaji-production'
 
 jobs:
   test:
@@ -59,7 +59,7 @@ jobs:
         username: root
         key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
         source: "."
-        target: "/var/www/html/kopesha-loan-app"
+        target: "/var/www/html/hela-mkopaji-app"
         strip_components: 1
 
     - name: 🔄 Restart App with PM2
@@ -69,7 +69,7 @@ jobs:
         username: root
         key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
         script: |
-          cd /var/www/html/kopesha-loan-app
+          cd /var/www/html/hela-mkopaji-app
           
           echo "🚀 Starting deployment..."
           
@@ -126,14 +126,14 @@ jobs:
           echo "🎉 Deployment completed successfully!"
           echo "📊 Final status:"
           pm2 status ${{ env.APP_NAME }}
-          echo "🌐 Application should be available at: http://${{ secrets.EC2_HOST }}:3001"
+          echo "🌐 Application should be available at: https://hela.mkopaji.com"
 
     - name: 📱 Slack notification (success)
       if: success()
       run: |
         if [ -n "${{ secrets.SLACK_WEBHOOK_URL }}" ]; then
           curl -X POST -H 'Content-type: application/json' \
-          --data '{"text":"✅ Deployment successful! FundFast app has been deployed to production server."}' \
+          --data '{"text":"✅ Deployment successful! Hela MKOPAJI app has been deployed to hela.mkopaji.com."}' \
           ${{ secrets.SLACK_WEBHOOK_URL }}
         fi
 
@@ -142,6 +142,6 @@ jobs:
       run: |
         if [ -n "${{ secrets.SLACK_WEBHOOK_URL }}" ]; then
           curl -X POST -H 'Content-type: application/json' \
-          --data '{"text":"❌ Deployment failed! Please check the GitHub Actions logs for details."}' \
+          --data '{"text":"❌ Deployment failed! Please check the GitHub Actions logs for details for hela.mkopaji.com."}' \
           ${{ secrets.SLACK_WEBHOOK_URL }}
         fi
